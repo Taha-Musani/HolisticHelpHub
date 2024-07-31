@@ -9,9 +9,13 @@ const Legal = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = await fetch("/legal", {
-          method: "GET",
-        });
+        console.log(import.meta.env.VITE_BACKEND_CONNECTION_URL);
+        let data = await fetch(
+          `${import.meta.env.VITE_BACKEND_CONNECTION_URL}legal`,
+          {
+            method: "GET",
+          }
+        );
         let datajson = await data.json();
         if (datajson.length > 0) {
           setDisplaydata(datajson);
@@ -26,12 +30,13 @@ const Legal = () => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const searchQuery = searchParams.get('search')?.toLowerCase() || '';
+    const searchQuery = searchParams.get("search")?.toLowerCase() || "";
 
     if (searchQuery) {
-      const filtered = displaydata.filter(item =>
-        item.name.toLowerCase().includes(searchQuery) ||
-        item.field_of_expertise.toLowerCase().includes(searchQuery)
+      const filtered = displaydata.filter(
+        (item) =>
+          item.name.toLowerCase().includes(searchQuery) ||
+          item.field_of_expertise.toLowerCase().includes(searchQuery)
       );
       setFilteredData(filtered);
     } else {
@@ -45,7 +50,10 @@ const Legal = () => {
         <p className="text-center text-2xl">Sorry!!! No Data Found</p>
       ) : (
         filteredData.map((ele, index) => (
-          <div key={index} className="card card-side bg-base-100 shadow-xl border-2 border-slate-500">
+          <div
+            key={index}
+            className="card card-side bg-base-100 shadow-xl border-2 border-slate-500"
+          >
             <figure>
               <img className="w-40" src={ele.photo} alt="image" />
             </figure>

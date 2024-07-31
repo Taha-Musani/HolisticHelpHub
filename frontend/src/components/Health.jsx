@@ -9,7 +9,7 @@ const Health = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let response = await fetch("/remedies", {
+        let response = await fetch(`${import.meta.env.VITE_BACKEND_CONNECTION_URL}remedies`, {
           method: "GET",
         });
         let dataJson = await response.json();
