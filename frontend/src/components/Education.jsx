@@ -9,7 +9,7 @@ const Education = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = await fetch("http://localhost:3000/education", {
+        let data = await fetch(`${process.env.BACKEND_CONNECTION_URL}/education`, {
           method: "GET",
         });
         let datajson = await data.json();

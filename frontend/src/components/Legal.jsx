@@ -9,7 +9,7 @@ const Legal = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = await fetch("http://localhost:3000/legal", {
+        let data = await fetch(`${process.env.BACKEND_CONNECTION_URL}/legal`, {
           method: "GET",
         });
         let datajson = await data.json();

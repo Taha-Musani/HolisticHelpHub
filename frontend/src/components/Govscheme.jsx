@@ -9,7 +9,7 @@ const Govscheme = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = await fetch("http://localhost:3000/scheme", {
+        let data = await fetch(`${process.env.BACKEND_CONNECTION_URL}/scheme`, {
           method: "GET",
         });
         let datajson = await data.json();

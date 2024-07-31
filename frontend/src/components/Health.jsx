@@ -9,7 +9,7 @@ const Health = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let response = await fetch("http://localhost:3000/remedies", {
+        let response = await fetch(`${process.env.BACKEND_CONNECTION_URL}/remedies`, {
           method: "GET",
         });
         let dataJson = await response.json();
