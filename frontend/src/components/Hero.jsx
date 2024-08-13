@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import education from "../assets/education.jpg";
 import gov from "../assets/scheme.jpg";
 import home from "../assets/remedies.jpg";
 import legal from "../assets/legal.jpg";
 
 const Hero = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let data = await fetch(`${import.meta.env.VITE_BACKEND_CONNECTION_URL}`, {
+          method: "GET",
+        });
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="carousel py-8 h-[83vh]">
       <div id="slide1" className="carousel-item relative w-full">

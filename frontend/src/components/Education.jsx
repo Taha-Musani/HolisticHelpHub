@@ -4,20 +4,26 @@ import { useLocation } from "react-router-dom";
 const Education = () => {
   const [displaydata, setDisplaydata] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = await fetch(`${import.meta.env.VITE_BACKEND_CONNECTION_URL}education`, {
-          method: "GET",
-        });
-        let datajson = await data.json();
+        let response = await fetch(
+          `${import.meta.env.VITE_BACKEND_CONNECTION_URL}education`,
+          {
+            method: "GET",
+          }
+        );
+        let datajson = await response.json();
         if (datajson.length > 0) {
           setDisplaydata(datajson);
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -26,12 +32,13 @@ const Education = () => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const searchQuery = searchParams.get('search')?.toLowerCase() || '';
+    const searchQuery = searchParams.get("search")?.toLowerCase() || "";
 
     if (searchQuery) {
-      const filtered = displaydata.filter(item =>
-        item.topic.toLowerCase().includes(searchQuery) ||
-        item.website.toLowerCase().includes(searchQuery)
+      const filtered = displaydata.filter(
+        (item) =>
+          item.topic.toLowerCase().includes(searchQuery) ||
+          item.website.toLowerCase().includes(searchQuery)
       );
       setFilteredData(filtered);
     } else {
@@ -41,9 +48,14 @@ const Education = () => {
 
   return (
     <div className="p-8 min-h-[83vh]">
-      <div className="overflow-x-auto">
+      {loading ? (
+        <div className="grid grid-cols-4 gap-8 p-8 pl-24 min-h-[83vh] max-2xl:grid-cols-3 max-xl:grid-cols-2 max-lg:p-4 max-lg:gap-4 max-md:grid-cols-1 max-md:place-items-center">
+          <div className="flex justify-center items-center col-span-4">
+            <div className="loader"></div>
+          </div>
+        </div>
+      ) : (
         <table className="table">
-          {/* head */}
           <thead>
             <tr>
               <th>Sr No.</th>
@@ -54,7 +66,9 @@ const Education = () => {
           <tbody>
             {filteredData.length === 0 ? (
               <tr>
-                <td colSpan="3" className="text-center text-2xl">Sorry!!! No Data Found</td>
+                <td colSpan="3" className="text-center text-2xl">
+                  Sorry!!! No Data Found
+                </td>
               </tr>
             ) : (
               filteredData.map((ele, index) => (
@@ -67,7 +81,7 @@ const Education = () => {
             )}
           </tbody>
         </table>
-      </div>
+      )}
     </div>
   );
 };

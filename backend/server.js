@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors"); // Import cors middleware
-require('dotenv').config();
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +32,15 @@ app.use(bodyParser.json());
 
 // Define routes
 // Get all Products
+
+app.get("/", async (req, res) => {
+  try {
+    res.status(200);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 app.get("/education", async (req, res) => {
   try {
     const data = await Edu.find();

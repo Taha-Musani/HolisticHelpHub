@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 const Legal = () => {
   const [displaydata, setDisplaydata] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
   const location = useLocation();
 
   useEffect(() => {
@@ -22,6 +23,8 @@ const Legal = () => {
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
+      } finally {
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
@@ -46,7 +49,11 @@ const Legal = () => {
 
   return (
     <div className="grid grid-cols-4 gap-8 p-8 pl-24 min-h-[83vh] max-2xl:grid-cols-3 max-xl:grid-cols-2 max-lg:p-4 max-lg:gap-4 max-md:grid-cols-1 max-md:place-items-center">
-      {filteredData.length === 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center col-span-4">
+          <div className="loader"></div> {/* Add your loader component here */}
+        </div>
+      ) : filteredData.length === 0 ? (
         <p className="text-center text-2xl">Sorry!!! No Data Found</p>
       ) : (
         filteredData.map((ele, index) => (
