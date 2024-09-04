@@ -47,11 +47,11 @@ const Education = () => {
   }, [location.search, displaydata]);
 
   return (
-    <div className="p-8 min-h-[83vh]">
+    <div>
       {loading ? (
         <div className="grid grid-cols-4 gap-8 p-8 pl-24 min-h-[83vh] max-2xl:grid-cols-3 max-xl:grid-cols-2 max-lg:p-4 max-lg:gap-4 max-md:grid-cols-1 max-md:place-items-center">
           <div className="flex justify-center items-center col-span-4">
-            <div className="loader"></div>
+          <span className="loading loading-spinner loading-lg"></span>
           </div>
         </div>
       ) : (
